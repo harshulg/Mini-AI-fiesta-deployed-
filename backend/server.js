@@ -19,7 +19,6 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 // Middleware
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json()); // Parse JSON bodies
-app.use(express.static('dist')); // Serve static files from dist directory (React build)
 
 // API Routes
 app.post('/api/chat', async (req, res) => {
@@ -111,13 +110,10 @@ app.get('/api/models', (req, res) => {
   });
 });
 
-// Serve the main HTML file
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
 
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 AI Fiesta Server running on http://localhost:${PORT}`);
   console.log(`📡 API endpoints available at http://localhost:${PORT}/api`);
 });
+
