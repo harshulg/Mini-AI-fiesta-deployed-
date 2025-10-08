@@ -10,6 +10,8 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const frontendPath = path.join(__dirname, 'dist');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -110,10 +112,14 @@ app.get('/api/models', (req, res) => {
   });
 });
 
+app.use(express.static(frontendPath));
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🚀 AI Fiesta Server running on http://localhost:${PORT}`);
-  console.log(`📡 API endpoints available at http://localhost:${PORT}/api`);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'index.html'));
 });
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
+
 
